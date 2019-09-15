@@ -42,17 +42,21 @@
 .listItem{
   margin: auto;
   height: 27px;
-  width: 300px;
+  width: 450px;
   border: 1px solid black;
 }
 .listName{
   float: left;
   text-align: left;
-  width: 244px;
+  width: 250px;
 }
 .listButton{
   float: left;
-  width: 45px;
+  width: 85px;
+}
+.listEdit{
+  float: left;
+  width: 85px;
 }
 .flag{
   width: 30px;

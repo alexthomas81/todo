@@ -13,6 +13,13 @@ function RemoveTodo(item) {
     }
 }
 
+function UpdateTodo(index, value) {
+    return {
+        type: 'UPDATE_TODO',
+        payload: { index: index, value: value },
+    }
+}
+
 function SearchCountry(countryname) {
     return {
         type: 'SEARCH_COUNTRY',
@@ -34,8 +41,14 @@ export const removeTodoForm = (item) => {
     })
 }
 
+export const updateTodoForm = (index, value) => {
+    return (dispatch => {
+        dispatch(UpdateTodo(index, value));
+    })
+}
 export const searchCountryName = (countryname) => {
     return (dispatch => {
         dispatch(SearchCountry(countryname));
     })
 }
+

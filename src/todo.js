@@ -1,5 +1,5 @@
 import React from 'react';
-import { addTodoForm, removeTodoForm, searchCountryName } from './actions/todo.action';
+import { addTodoForm, removeTodoForm, updateTodoForm, searchCountryName } from './actions/todo.action';
 import { connect } from 'react-redux';
 
 class Todo extends React.Component {
@@ -9,6 +9,8 @@ class Todo extends React.Component {
         console.log('constructor == ');
         this.state = {
             countries: [],
+            isEdit: null,
+            editName: '',
         }
     }
 
@@ -33,6 +35,25 @@ class Todo extends React.Component {
         const { _removeTodoForm } = this.props;
         _removeTodoForm(item);
     }
+    handleUpdateForm = (e, index) => {
+        const { _updateTodoForm } = this.props;
+        const { editName } = this.state;
+        _updateTodoForm(index, editName);
+        this.setState({
+            isEdit: null,
+        })
+    }
+    handleEditForm = (e, index) => {
+        this.setState({
+            isEdit: index,
+        })
+        console.log(index);
+    }
+    handleEditName = (e) => {
+        this.setState({
+            editName: e.target.value,
+        })
+    }
     handleTodo = (e) => {
         this.setState({
             todo: e.target.value,
@@ -52,7 +73,7 @@ class Todo extends React.Component {
 
     render() {
         const { todoList, countryname } = this.props;
-        const { countries } = this.state;
+        const { countries, isEdit } = this.state;
         console.log('r1', countries);
         const newList = countries.filter(element => {
             return element.name.toLowerCase().includes(countryname.toLowerCase());
@@ -61,20 +82,21 @@ class Todo extends React.Component {
         return (
             <div className="Todo">
                 <div>
-                    <div>My todo list!<br /><br /><br />
+                    <div>My todo list!<br />
                         <input type="text" id="name" onChange={this.handleTodo} />
                         <button onClick={this.handleAddForm}>Add</button><br />
                     </div>
-                    <br /><br /><br />
+                    <br />
                     {todoList.map((list, index) => (
                         <div className="listItem" key={index}>
-                            <div className="listName">{list}</div>
+                            <div className="listName">{isEdit === index ? <input type="text" onChange={this.handleEditName} /> : list}</div>
+                            <div className="listEdit"><button onClick={isEdit === index ? (e) => this.handleUpdateForm(e, index) : (e) => this.handleEditForm(e, index)}>{isEdit === index ? 'Update' : 'Edit'}</button></div>
                             <div className="listButton"><button onClick={(e) => this.handleDeleteForm(e, index)}>Delete</button></div>
                         </div>
                     ))}
                 </div >
                 <hr></hr>
-                <div>Countries list!<br /><br /><br />
+                <div>Countries list!<br />
                     <input type="text" id="searchCountry" onChange={this.handleCountrySearch} />
                     <button onClick={this.handleCountryName}>Search</button><br />
                 </div>
@@ -103,6 +125,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     _removeTodoForm: (item) => {
         dispatch(removeTodoForm(item));
+    },
+    _updateTodoForm: (index, value) => {
+        dispatch(updateTodoForm(index, value));
     },
     _searchCountryName: (countryname) => {
         dispatch(searchCountryName(countryname))
