@@ -10,6 +10,7 @@ class Todo extends React.Component {
         this.state = {
             countries: [],
             isEdit: null,
+            isShow: null,
             editName: '',
         }
     }
@@ -43,6 +44,12 @@ class Todo extends React.Component {
             isEdit: null,
         })
     }
+    handleShowForm = (e, index) => {
+        this.setState({
+            isShow: index,
+        })
+        console.log(index);
+    }
     handleEditForm = (e, index) => {
         this.setState({
             isEdit: index,
@@ -73,7 +80,7 @@ class Todo extends React.Component {
 
     render() {
         const { todoList, countryname } = this.props;
-        const { countries, isEdit } = this.state;
+        const { countries, isEdit, isShow } = this.state;
         console.log('r1', countries);
         const newList = countries.filter(element => {
             return element.name.toLowerCase().includes(countryname.toLowerCase());
@@ -105,6 +112,10 @@ class Todo extends React.Component {
                     <div className="countryItem" key={index}>
                         <div className="countryName">{list.name}</div>
                         <div className="countryFlag"><img src={list.flag} className="flag"></img></div>
+                        <div className="countryButton"><button onClick={(e) => this.handleShowForm(e, index)}>Show</button></div>
+                        {isShow === index ? <div className="countryDetail">Capital : {list.capital}
+                        <br></br>Currency : {list.currencies[0].name}  
+                        <br></br>Language : {list.languages[0].name}</div> : ''}
                     </div>
                 )}
             </div >
