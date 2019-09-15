@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Todo from './todo';
 
+// function component
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Todo />
+      <Footer />
     </div>
   );
+}
+
+//class component
+class Header extends React.Component {
+
+  componentWillMount() {
+    console.log('Will mount header');
+  }
+
+  componentDidMount() {
+    console.log('Did mount header');
+  }
+
+  render() {
+    return (<div className="Top">To Do List</div>);
+  }
+}
+
+class Footer extends React.Component {
+
+  componentWillMount() {
+    console.log('Will mount header');
+  }
+
+  componentDidMount() {
+    console.log('Did mount header');
+  }
+
+  render() {
+    return (<div className="Bottom">Copyright To Do @ 2019</div>);
+  }
 }
 
 export default App;

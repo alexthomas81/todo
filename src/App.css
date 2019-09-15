@@ -31,3 +31,26 @@
     transform: rotate(360deg);
   }
 }
+
+.Top{
+  background-color:rgb(255, 0, 0) ; width: 100vw; padding: 12px;
+}
+.Bottom{
+  position: fixed; bottom:0px; background-color:rgb(51, 255, 0); width: 100vw; padding: 12px;
+}
+
+.listItem{
+  margin: auto;
+  height: 27px;
+  width: 300px;
+  border: 1px solid black;
+}
+.listName{
+  float: left;
+  text-align: left;
+  width: 244px;
+}
+.listButton{
+  float: left;
+  width: 45px;
+}
