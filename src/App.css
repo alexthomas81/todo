@@ -54,3 +54,21 @@
   float: left;
   width: 45px;
 }
+.flag{
+  width: 30px;
+}
+.countryItem{
+  margin: auto;
+  height: 27px;
+  width: 500px;
+  border: 1px solid black;
+}
+.countryName{
+  float: left;
+  text-align: left;
+  width: 444px;
+}
+.countryFlag{
+  float: left;
+  width: 45px;
+}

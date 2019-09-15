@@ -1,5 +1,6 @@
 const InitialState = {
     todoList: [],
+    countryname: '',
 };
 
 const AddTodo = (state, action) => {
@@ -21,10 +22,20 @@ const RemoveTodo = (state, action) => {
     }
 }
 
+const SearchCountry = (state, action) => {
+    console.log(action.payload);
+    const { payload } = action;
+    return {
+        ...state,
+        countryname: payload,
+    }
+}
+
 export function todoReducer(state = InitialState, action) {
     switch (action.type) {
-        case 'ADD_FORM': return AddTodo(state, action);
-        case 'REMOVE_FORM': return RemoveTodo(state, action);
+        case 'ADD_TODO': return AddTodo(state, action);
+        case 'REMOVE_TODO': return RemoveTodo(state, action);
+        case 'SEARCH_COUNTRY': return SearchCountry(state, action);
         default:
             return state;
     }

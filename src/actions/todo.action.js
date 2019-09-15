@@ -1,15 +1,22 @@
 //  Action - type & payload
 function AddTodo(todo) {
     return {
-        type: 'ADD_FORM',
+        type: 'ADD_TODO',
         payload: todo,
     }
 }
 
 function RemoveTodo(item) {
     return {
-        type: 'REMOVE_FORM',
+        type: 'REMOVE_TODO',
         payload: item,
+    }
+}
+
+function SearchCountry(countryname) {
+    return {
+        type: 'SEARCH_COUNTRY',
+        payload: countryname,
     }
 }
 
@@ -24,5 +31,11 @@ export const addTodoForm = (todo) => {
 export const removeTodoForm = (item) => {
     return (dispatch => {
         dispatch(RemoveTodo(item));
+    })
+}
+
+export const searchCountryName = (countryname) => {
+    return (dispatch => {
+        dispatch(SearchCountry(countryname));
     })
 }

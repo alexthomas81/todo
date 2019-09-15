@@ -1,5 +1,5 @@
 import React from 'react';
-import { addTodoForm, removeTodoForm } from './actions/todo.action';
+import { addTodoForm, removeTodoForm, searchCountryName } from './actions/todo.action';
 import { connect } from 'react-redux';
 
 class Todo extends React.Component {
@@ -7,7 +7,9 @@ class Todo extends React.Component {
     constructor(props) {
         super(props);
         console.log('constructor == ');
-
+        this.state = {
+            countries: [],
+        }
     }
 
     componentWillMount() {
@@ -16,6 +18,10 @@ class Todo extends React.Component {
 
     componentDidMount() {
         console.log('Did mount');
+        // fetch
+        fetch('https://restcountries.eu/rest/v2/all')
+            .then(response => response.json())
+            .then(data => this.setState({ countries: data }));
     }
 
     handleAddForm = () => {
@@ -23,7 +29,6 @@ class Todo extends React.Component {
         const { todo } = this.state;
         _addTodoForm(todo);
     }
-
     handleDeleteForm = (e, item) => {
         const { _removeTodoForm } = this.props;
         _removeTodoForm(item);
@@ -33,10 +38,26 @@ class Todo extends React.Component {
             todo: e.target.value,
         })
     }
+    handleCountrySearch = (e) => {
+        this.setState({
+            countryname: e.target.value,
+        })
+    }
+    handleCountryName = () => {
+        const { _searchCountryName } = this.props;
+        const { countryname } = this.state;
+        console.log(countryname);
+        _searchCountryName(countryname);
+    }
 
     render() {
-        const { todoList } = this.props;
-        console.log('r2', todoList);
+        const { todoList, countryname } = this.props;
+        const { countries } = this.state;
+        console.log('r1', countries);
+        const newList = countries.filter(element => {
+            return element.name.toLowerCase().includes(countryname.toLowerCase());
+        });
+        console.log('r2', newList);
         return (
             <div className="Todo">
                 <div>
@@ -52,6 +73,18 @@ class Todo extends React.Component {
                         </div>
                     ))}
                 </div >
+                <hr></hr>
+                <div>Countries list!<br /><br /><br />
+                    <input type="text" id="searchCountry" onChange={this.handleCountrySearch} />
+                    <button onClick={this.handleCountryName}>Search</button><br />
+                </div>
+                <b>{countryname}</b>
+                {newList.map((list, index) =>
+                    <div className="countryItem" key={index}>
+                        <div className="countryName">{list.name}</div>
+                        <div className="countryFlag"><img src={list.flag} className="flag"></img></div>
+                    </div>
+                )}
             </div >
         )
     }
@@ -60,6 +93,7 @@ class Todo extends React.Component {
 // Get store to the Componemt
 const mapStoreToProps = (store) => ({
     todoList: store.todoList,
+    countryname: store.countryname,
 });
 
 // To dispatch Specific Action written in action.js File
@@ -69,6 +103,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     _removeTodoForm: (item) => {
         dispatch(removeTodoForm(item));
+    },
+    _searchCountryName: (countryname) => {
+        dispatch(searchCountryName(countryname))
     },
 });
 
